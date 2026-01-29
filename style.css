@@ -1,0 +1,302 @@
+:root{
+  --bg:#f6f7f8;
+  --card:#ffffff;
+  --text:#18222f;
+  --muted:#607086;
+  --line:#e6e8ec;
+  --accent-h: 120; /* wird vom JS gesetzt */
+}
+
+*{ box-sizing:border-box; }
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* ---------- Header ---------- */
+header{
+  padding:18px 16px;
+  border-bottom:1px solid var(--line);
+  background:rgba(255,255,255,0.7);
+  backdrop-filter: blur(8px);
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+header h1{ margin:0; font-size:18px; }
+
+/* ---------- Layout ---------- */
+.wrap{
+  max-width:1100px;
+  margin:0 auto;
+  padding:16px;
+  display:grid;
+  gap:16px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 900px){
+  .wrap{ grid-template-columns: 1.1fr 0.9fr; align-items:start; }
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:14px;
+  box-shadow: 0 8px 30px rgba(16,24,40,.06);
+}
+
+.row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+select, button{
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--text);
+  border-radius:12px;
+  padding:10px 12px;
+  font-size:14px;
+}
+button{ cursor:pointer; }
+
+/* ---------- Monatszeile oben ---------- */
+.monthTitle{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:10px;
+  padding:2px 2px 10px;
+}
+/* Monat/Jahreszeit oben links ausblenden */
+.monthTitle > div:first-child{ display:none !important; }
+
+/* ---------- Wheel ---------- */
+.wheelWrap{
+  display:grid;
+  place-items:center;
+  padding:10px 0 6px;
+  position:relative;
+}
+
+.wheel{
+  width:min(680px, 96vw);
+  aspect-ratio:1/1;
+  border-radius:50%;
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--line);
+
+  background:
+    radial-gradient(circle at center, rgba(255,255,255,.96) 0 62%, rgba(255,255,255,0) 63%),
+    conic-gradient(from -90deg,
+      hsla(210,60%,80%,.28) 0 25%,
+      hsla(120,55%,78%,.28) 25% 50%,
+      hsla(45,80%,78%,.28) 50% 75%,
+      hsla(25,70%,78%,.28) 75% 100%
+    );
+}
+
+/* ---------- Center ---------- */
+.wheelCenter{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:230px;
+  height:230px;
+  border-radius:999px;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+
+  background: rgba(255,255,255,.92);
+  border: 1px solid rgba(0,0,0,.06);
+  box-shadow: 0 14px 40px rgba(0,0,0,.10);
+
+  z-index:2;
+  pointer-events:none;
+}
+
+.wheelCenter .m{
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.wheelCenter .s{ font-size:.95rem; opacity:.8; }
+
+/* ---------- Chips ---------- */
+.chip{
+  position:absolute;
+  z-index:3;
+  left:50%;
+  top:50%;
+  transform-origin: 0 0;
+  transform:
+    translate(-50%,-50%)
+    rotate(var(--rot))
+    translate(0, calc(-1 * var(--radius)))
+    rotate(calc(-1 * var(--rot)));
+
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+
+  padding:10px 14px;
+  border-radius:999px;
+
+  background: hsla(var(--accent-h), 45%, 96%, .95);
+  border:1px solid hsla(var(--accent-h), 35%, 55%, .55);
+  box-shadow: 0 6px 18px rgba(16,24,40,.08);
+
+  cursor:pointer;
+  user-select:none;
+
+  max-width:50%;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+
+  font-size:1rem;
+  min-width:150px;
+
+  will-change: transform;
+}
+
+.chip strong{
+  font-size:1.05rem;
+  font-weight:600;
+  max-width:220px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background: hsla(var(--accent-h), 55%, 45%, 1);
+}
+
+.badge{
+  font-size:11px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--muted);
+}
+
+/* ---------- Rezepte ---------- */
+.detail h3{ margin:0 0 8px; font-size:16px; }
+.muted{ color:var(--muted); font-size:13px; line-height:1.35; }
+.kicker{ font-size:12px; color:var(--muted); margin:0 0 6px; }
+
+.recipes{ margin-top:12px; display:grid; gap:10px; }
+.recipe{
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:12px;
+  background:#fff;
+}
+.recipe h4{ margin:0 0 6px; font-size:14px; }
+.recipe ul{ margin:8px 0 0 18px; }
+
+/* ---------- Startseite ---------- */
+.startScreen{
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.startPoster{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  transform: scale(1.02);
+}
+
+.startScreen::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(0,0,0,.25), rgba(0,0,0,.55)),
+    linear-gradient(rgba(0,0,0,.15), rgba(0,0,0,.35));
+  z-index:1;
+}
+
+.startOverlay{
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+
+  padding: 34px 36px;
+  border-radius: 26px;
+
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.22);
+  box-shadow: 0 18px 60px rgba(0,0,0,.35);
+  backdrop-filter: blur(10px);
+
+  max-width: 620px;
+  margin: 0 16px;
+}
+
+.startOverlay h1{
+  margin: 0 0 10px 0;
+  font-size: 2.1rem;
+  line-height: 1.12;
+}
+
+.startOverlay p{
+  margin: 0;
+  opacity: .92;
+  font-size: 1.05rem;
+}
+
+#startBtn{
+  margin-top: 18px;
+  padding: 14px 30px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+
+  background: rgba(127,183,126,.95);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+
+  box-shadow: 0 10px 22px rgba(0,0,0,.25);
+  transition: transform .12s ease, filter .12s ease;
+}
+#startBtn:hover{ transform: translateY(-1px); filter: brightness(1.02); }
+#startBtn:active{ transform: translateY(0px); }
+
+/* ---------- Compact ---------- */
+.wheel.compact .chip{
+  padding: 7px 10px;
+  font-size: .90rem;
+  min-width: 110px;
+  max-width: 46%;
+}
+.wheel.compact .chip strong{
+  font-size: .95rem;
+  max-width: 170px;
+}
